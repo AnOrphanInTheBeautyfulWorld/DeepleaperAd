@@ -1,0 +1,590 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		58434A231EFBB24800C1ADC7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58434A221EFBB24800C1ADC7 /* main.m */; };
+		58434A261EFBB24800C1ADC7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58434A251EFBB24800C1ADC7 /* AppDelegate.m */; };
+		58434A2E1EFBB24800C1ADC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58434A2D1EFBB24800C1ADC7 /* Assets.xcassets */; };
+		58434A311EFBB24800C1ADC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58434A2F1EFBB24800C1ADC7 /* LaunchScreen.storyboard */; };
+		58434A3C1EFBB24800C1ADC7 /* DeepleaperAdExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58434A3B1EFBB24800C1ADC7 /* DeepleaperAdExampleTests.m */; };
+		58434A471EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58434A461EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.m */; };
+		585FCCC31F135E1E00BB875E /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 585FCCC21F135E1E00BB875E /* WebViewController.m */; };
+		585FCCC81F13745400BB875E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 585FCCC61F13745400BB875E /* Main.storyboard */; };
+		58864EAF1EFBB40C000DD97F /* NativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58864EAE1EFBB40C000DD97F /* NativeViewController.m */; };
+		58864EB21EFBB533000DD97F /* FakeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 58864EB11EFBB533000DD97F /* FakeData.m */; };
+		58864EF71EFBC507000DD97F /* LandPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58864EF61EFBC507000DD97F /* LandPageViewController.m */; };
+		58E45CE71F17633500F083FB /* DeepleaperAd.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 58E45CE61F17633500F083FB /* DeepleaperAd.bundle */; };
+		58E45CE91F17636200F083FB /* DeepleaperAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E45CE81F17636200F083FB /* DeepleaperAd.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		58434A381EFBB24800C1ADC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58434A161EFBB24800C1ADC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58434A1D1EFBB24800C1ADC7;
+			remoteInfo = DeepleaperAdExample;
+		};
+		58434A431EFBB24900C1ADC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58434A161EFBB24800C1ADC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58434A1D1EFBB24800C1ADC7;
+			remoteInfo = DeepleaperAdExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		58434A1E1EFBB24800C1ADC7 /* DeepleaperAdExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepleaperAdExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		58434A221EFBB24800C1ADC7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		58434A241EFBB24800C1ADC7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		58434A251EFBB24800C1ADC7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		58434A2D1EFBB24800C1ADC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		58434A301EFBB24800C1ADC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		58434A321EFBB24800C1ADC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58434A371EFBB24800C1ADC7 /* DeepleaperAdExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeepleaperAdExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58434A3B1EFBB24800C1ADC7 /* DeepleaperAdExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepleaperAdExampleTests.m; sourceTree = "<group>"; };
+		58434A3D1EFBB24800C1ADC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58434A421EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeepleaperAdExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58434A461EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeepleaperAdExampleUITests.m; sourceTree = "<group>"; };
+		58434A481EFBB24900C1ADC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		585FCCC11F135E1E00BB875E /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		585FCCC21F135E1E00BB875E /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		585FCCC71F13745400BB875E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		58864EAD1EFBB40C000DD97F /* NativeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeViewController.h; sourceTree = "<group>"; };
+		58864EAE1EFBB40C000DD97F /* NativeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeViewController.m; sourceTree = "<group>"; };
+		58864EB01EFBB533000DD97F /* FakeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeData.h; sourceTree = "<group>"; };
+		58864EB11EFBB533000DD97F /* FakeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeData.m; sourceTree = "<group>"; };
+		58864EF51EFBC507000DD97F /* LandPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandPageViewController.h; sourceTree = "<group>"; };
+		58864EF61EFBC507000DD97F /* LandPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandPageViewController.m; sourceTree = "<group>"; };
+		58E45CE61F17633500F083FB /* DeepleaperAd.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DeepleaperAd.bundle; path = ../../DeepleaperAd.bundle; sourceTree = "<group>"; };
+		58E45CE81F17636200F083FB /* DeepleaperAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeepleaperAd.framework; path = ../../DeepleaperAd.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		58434A1B1EFBB24800C1ADC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58E45CE91F17636200F083FB /* DeepleaperAd.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A341EFBB24800C1ADC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A3F1EFBB24900C1ADC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		58434A151EFBB24800C1ADC7 = {
+			isa = PBXGroup;
+			children = (
+				58E45CE61F17633500F083FB /* DeepleaperAd.bundle */,
+				58434A201EFBB24800C1ADC7 /* DeepleaperAdExample */,
+				58434A3A1EFBB24800C1ADC7 /* DeepleaperAdExampleTests */,
+				58434A451EFBB24900C1ADC7 /* DeepleaperAdExampleUITests */,
+				58434A1F1EFBB24800C1ADC7 /* Products */,
+				58FD47F91F160C5800AAEB64 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		58434A1F1EFBB24800C1ADC7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				58434A1E1EFBB24800C1ADC7 /* DeepleaperAdExample.app */,
+				58434A371EFBB24800C1ADC7 /* DeepleaperAdExampleTests.xctest */,
+				58434A421EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58434A201EFBB24800C1ADC7 /* DeepleaperAdExample */ = {
+			isa = PBXGroup;
+			children = (
+				58434A241EFBB24800C1ADC7 /* AppDelegate.h */,
+				58434A251EFBB24800C1ADC7 /* AppDelegate.m */,
+				58864EAD1EFBB40C000DD97F /* NativeViewController.h */,
+				58864EAE1EFBB40C000DD97F /* NativeViewController.m */,
+				585FCCC11F135E1E00BB875E /* WebViewController.h */,
+				585FCCC21F135E1E00BB875E /* WebViewController.m */,
+				58864EF51EFBC507000DD97F /* LandPageViewController.h */,
+				58864EF61EFBC507000DD97F /* LandPageViewController.m */,
+				58864EB01EFBB533000DD97F /* FakeData.h */,
+				58864EB11EFBB533000DD97F /* FakeData.m */,
+				585FCCC61F13745400BB875E /* Main.storyboard */,
+				58434A2D1EFBB24800C1ADC7 /* Assets.xcassets */,
+				58434A2F1EFBB24800C1ADC7 /* LaunchScreen.storyboard */,
+				58434A321EFBB24800C1ADC7 /* Info.plist */,
+				58434A211EFBB24800C1ADC7 /* Supporting Files */,
+			);
+			path = DeepleaperAdExample;
+			sourceTree = "<group>";
+		};
+		58434A211EFBB24800C1ADC7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				58434A221EFBB24800C1ADC7 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		58434A3A1EFBB24800C1ADC7 /* DeepleaperAdExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				58434A3B1EFBB24800C1ADC7 /* DeepleaperAdExampleTests.m */,
+				58434A3D1EFBB24800C1ADC7 /* Info.plist */,
+			);
+			path = DeepleaperAdExampleTests;
+			sourceTree = "<group>";
+		};
+		58434A451EFBB24900C1ADC7 /* DeepleaperAdExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				58434A461EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.m */,
+				58434A481EFBB24900C1ADC7 /* Info.plist */,
+			);
+			path = DeepleaperAdExampleUITests;
+			sourceTree = "<group>";
+		};
+		58FD47F91F160C5800AAEB64 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				58E45CE81F17636200F083FB /* DeepleaperAd.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		58434A1D1EFBB24800C1ADC7 /* DeepleaperAdExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58434A4B1EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExample" */;
+			buildPhases = (
+				58434A1A1EFBB24800C1ADC7 /* Sources */,
+				58434A1B1EFBB24800C1ADC7 /* Frameworks */,
+				58434A1C1EFBB24800C1ADC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeepleaperAdExample;
+			productName = DeepleaperAdExample;
+			productReference = 58434A1E1EFBB24800C1ADC7 /* DeepleaperAdExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		58434A361EFBB24800C1ADC7 /* DeepleaperAdExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58434A4E1EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExampleTests" */;
+			buildPhases = (
+				58434A331EFBB24800C1ADC7 /* Sources */,
+				58434A341EFBB24800C1ADC7 /* Frameworks */,
+				58434A351EFBB24800C1ADC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58434A391EFBB24800C1ADC7 /* PBXTargetDependency */,
+			);
+			name = DeepleaperAdExampleTests;
+			productName = DeepleaperAdExampleTests;
+			productReference = 58434A371EFBB24800C1ADC7 /* DeepleaperAdExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		58434A411EFBB24900C1ADC7 /* DeepleaperAdExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58434A511EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExampleUITests" */;
+			buildPhases = (
+				58434A3E1EFBB24900C1ADC7 /* Sources */,
+				58434A3F1EFBB24900C1ADC7 /* Frameworks */,
+				58434A401EFBB24900C1ADC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58434A441EFBB24900C1ADC7 /* PBXTargetDependency */,
+			);
+			name = DeepleaperAdExampleUITests;
+			productName = DeepleaperAdExampleUITests;
+			productReference = 58434A421EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		58434A161EFBB24800C1ADC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "刘畅";
+				TargetAttributes = {
+					58434A1D1EFBB24800C1ADC7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = G8VDW5P588;
+						ProvisioningStyle = Automatic;
+					};
+					58434A361EFBB24800C1ADC7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = G8VDW5P588;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 58434A1D1EFBB24800C1ADC7;
+					};
+					58434A411EFBB24900C1ADC7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = G8VDW5P588;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 58434A1D1EFBB24800C1ADC7;
+					};
+				};
+			};
+			buildConfigurationList = 58434A191EFBB24800C1ADC7 /* Build configuration list for PBXProject "DeepleaperAdExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 58434A151EFBB24800C1ADC7;
+			productRefGroup = 58434A1F1EFBB24800C1ADC7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				58434A1D1EFBB24800C1ADC7 /* DeepleaperAdExample */,
+				58434A361EFBB24800C1ADC7 /* DeepleaperAdExampleTests */,
+				58434A411EFBB24900C1ADC7 /* DeepleaperAdExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		58434A1C1EFBB24800C1ADC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58434A311EFBB24800C1ADC7 /* LaunchScreen.storyboard in Resources */,
+				585FCCC81F13745400BB875E /* Main.storyboard in Resources */,
+				58434A2E1EFBB24800C1ADC7 /* Assets.xcassets in Resources */,
+				58E45CE71F17633500F083FB /* DeepleaperAd.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A351EFBB24800C1ADC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A401EFBB24900C1ADC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58434A1A1EFBB24800C1ADC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58864EB21EFBB533000DD97F /* FakeData.m in Sources */,
+				58434A261EFBB24800C1ADC7 /* AppDelegate.m in Sources */,
+				58434A231EFBB24800C1ADC7 /* main.m in Sources */,
+				585FCCC31F135E1E00BB875E /* WebViewController.m in Sources */,
+				58864EF71EFBC507000DD97F /* LandPageViewController.m in Sources */,
+				58864EAF1EFBB40C000DD97F /* NativeViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A331EFBB24800C1ADC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58434A3C1EFBB24800C1ADC7 /* DeepleaperAdExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58434A3E1EFBB24900C1ADC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58434A471EFBB24900C1ADC7 /* DeepleaperAdExampleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		58434A391EFBB24800C1ADC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58434A1D1EFBB24800C1ADC7 /* DeepleaperAdExample */;
+			targetProxy = 58434A381EFBB24800C1ADC7 /* PBXContainerItemProxy */;
+		};
+		58434A441EFBB24900C1ADC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58434A1D1EFBB24800C1ADC7 /* DeepleaperAdExample */;
+			targetProxy = 58434A431EFBB24900C1ADC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		58434A2F1EFBB24800C1ADC7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58434A301EFBB24800C1ADC7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		585FCCC61F13745400BB875E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				585FCCC71F13745400BB875E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		58434A491EFBB24900C1ADC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		58434A4A1EFBB24900C1ADC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		58434A4C1EFBB24900C1ADC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DeepleaperAdExample",
+					"${PROJECT_DIR}/../../",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = DeepleaperAdExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Deepleaper.adExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		58434A4D1EFBB24900C1ADC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DeepleaperAdExample",
+					"${PROJECT_DIR}/../../",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = DeepleaperAdExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Deepleaper.adExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		58434A4F1EFBB24900C1ADC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				INFOPLIST_FILE = DeepleaperAdExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deepleaper.6.DeepleaperAdExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepleaperAdExample.app/DeepleaperAdExample";
+			};
+			name = Debug;
+		};
+		58434A501EFBB24900C1ADC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				INFOPLIST_FILE = DeepleaperAdExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deepleaper.6.DeepleaperAdExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepleaperAdExample.app/DeepleaperAdExample";
+			};
+			name = Release;
+		};
+		58434A521EFBB24900C1ADC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				INFOPLIST_FILE = DeepleaperAdExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deepleaper.6.DeepleaperAdExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DeepleaperAdExample;
+			};
+			name = Debug;
+		};
+		58434A531EFBB24900C1ADC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = G8VDW5P588;
+				INFOPLIST_FILE = DeepleaperAdExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deepleaper.6.DeepleaperAdExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DeepleaperAdExample;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58434A191EFBB24800C1ADC7 /* Build configuration list for PBXProject "DeepleaperAdExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58434A491EFBB24900C1ADC7 /* Debug */,
+				58434A4A1EFBB24900C1ADC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58434A4B1EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58434A4C1EFBB24900C1ADC7 /* Debug */,
+				58434A4D1EFBB24900C1ADC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58434A4E1EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58434A4F1EFBB24900C1ADC7 /* Debug */,
+				58434A501EFBB24900C1ADC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58434A511EFBB24900C1ADC7 /* Build configuration list for PBXNativeTarget "DeepleaperAdExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58434A521EFBB24900C1ADC7 /* Debug */,
+				58434A531EFBB24900C1ADC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 58434A161EFBB24800C1ADC7 /* Project object */;
+}

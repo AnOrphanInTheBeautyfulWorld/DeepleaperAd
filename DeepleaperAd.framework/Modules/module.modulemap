@@ -1,0 +1,6 @@
+framework module DeepleaperAd {
+  umbrella header "DeepleaperAd.h"
+
+  export *
+  module * { export * }
+}
