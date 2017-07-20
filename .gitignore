@@ -27,6 +27,8 @@ xcuserdata
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
+## Cocoapods
+.podspec
 
 # CocoaPods
 #
@@ -54,5 +56,4 @@ fastlane/report.xml
 fastlane/screenshots
 .DS_Store
 */.DS_Store
-.podspec
-*/.podspec
+
