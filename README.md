@@ -21,7 +21,7 @@
 
 - iOS 8.0+；</br>
 - **StoreKit.framework** 和 **AdSupport.framework** 作为依赖库；</br>
-- 工程可以访问http网页，即**Info.plist**文件中的**App Transport Security Settings**字典中的**Allow Arbitrary Loads**布尔值为**YES**。
+- 工程可以访问http url，即**Info.plist**文件中的**App Transport Security Settings**字典中的**Allow Arbitrary Loads**布尔值为**YES**。
 </br>
 
 ## 3.集成
@@ -39,691 +39,264 @@ end
 <code>pod install</code>
 
 ### ② 手动添加：
-从[DeepLeaper官网](www.deepleaper.com)下载**DeepleaperAd.framework**静态库，在**Build Phases** -> **Link Binary With Libraries** 和 **Build Phases** -> **Copy Bundle Resources**中添加**DeepleaperAd.framework**
+从[DeepLeaper官网](www.deepleaper.com)下载**DeepleaperAd.framework**静态库和**DeepleaperAd.bundle**资源包，在**Build Phases** -> **Link Binary With Libraries**添加**DeepleaperAd.framework**，**Build Phases** -> **Copy Bundle Resources**中添加**bundle**
 </br>
 
-## 4.信息流广告
-#### 信息流广告将会返回一个封装好的View和它的高度，在数据源内插入并设置好渲染的Cell，完成代理方法即可。信息流广告包含native类型和web类型。native类型会返回原生的控件，您可以在遵循广告设计守则的前提下自由设置所有控件的位置，大小等；web类型会返回由webView渲染的控件，在此类型下您可以设置标题的属性和图文的间隔；
-### 4.1 native
-
-### 4.2 web
-### ① 引用:
-#### Objective-C
-```
-#import "ViewController.h"
-@import DeepleaperAd;
-@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,DLDynamicAdManagerDelegate>
-@property(nonatomic,copy) NSMutableArray* sourceAry;//数据数组
-@end
-@implementation ViewController
-{
-    NSInteger _indexRow;//存储上一次点击的row
-}
-```
-#### Swift
-```
-import UIKit
-import DeepleaperAd;
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,DLDynamicAdManagerDelegate {
-var _indexRow : Int = Int.init();//存储上一次点击的row
-var _dataAry = NSMutableArray();//数据数组
-```
-### ② 请求广告:
-#### Objective-C
-```
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //初始化动态广告管理器
-    DLDynamicAdManager* dlm = [DLDynamicAdManager getDynamicAdManager];
-    dlm.delegate = self;
-    InfoData* data = _sourceAry[indexPath.row];
-    //请求广告 参数为 落地页地址，广告位ID，广告位宽度
-    [dlm startLoadDynamicAD:data.webUrl AuTag:YOURADID andWidth:FeedAdWeight];
-    _indexRow = indexPath.row ? indexPath.row : 0;
-    //Your Code...
-}    
-```
-#### Swift
-```
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-	//初始化动态广告管理器
-    let dlm : DLDynamicAdManager = DLDynamicAdManager.getDynamicAdManager();
-    dlm.delegate = self;
-    let data : InfoData = _dataAry[indexPath.row] as! InfoData;
-    //请求广告 参数为 落地页地址，广告位ID，广告位宽度
-    dlm.startLoadDynamicAD(data.webUrl, auTag:"YOURAPPAUTAG" , andWidth:375.00);
-    _indexRow = indexPath.row != 0 ? indexPath.row : 0;
-    //Your Code...
-}
-```
-### ③ 添加广告展示:
-#### Objective-C
-```
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *ID = @"adCell";
-    tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: ID];
-    }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    for (UIView* view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
-    [cell.contentView addSubview:data.ad];//data.ad是广告view
-    return cell;
-}
-```
-#### Swift
-```
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let ID = "adCell";
-    _tableView.separatorStyle = UITableViewCellSeparatorStyle(rawValue: 1)!;
-    var cell = _tableView.dequeueReusableCell(withIdentifier: ID);
-    if cell == nil {
-        cell = UITableViewCell.init(style: UITableViewCellStyle(rawValue: 0)!, reuseIdentifier: ID);
-    }
-    cell?.selectionStyle = UITableViewCellSelectionStyle(rawValue:0)!;
-    cell?.contentView.addSubview(data.ad);
-    return cell!;
-}
-```
-### ④ 实现代理方法:
-#### Objective-C
-```
-//动态广告下载成功 收到广告的view和高度
--(void)didLoadDynamicAdView:(DLFeedAdView*)AdView andHeight:(float)height{
-    //根据既定数据结构添加到数据源
-    InfoData* data = [[InfoData alloc]init];
-    data.ad = AdView;
-    data.height = height;
-
-#warning "Optional start"
-    //如果需要同时只存在一个动态广告（即展示下一个就回收上一个），就加上此段代码用来回收旧广告
-    for (int i = 0; i<=_sourceAry.count-1; i++) {
-        InfoData* data = _sourceAry[i];
-        if (data.ad.adType == DLAD_DYNAMIC) {
-            [_sourceAry removeObjectAtIndex:i];
-            if(i<_indexRow){
-                _indexRow--;
-            }
-            break;
-        }
-    }
-#warning "Optional end"
-    
-    //成功下载的广告加入数据源
-    [_sourceAry insertObject:data atIndex:_indexRow+1];
-    //刷新
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-    });
-}
-```
-```
-//关闭广告位
--(void)closeDynamicFeedView{
-    for (int i = 0; i<=_sourceAry.count-1; i++) {
-        InfoData* data = _sourceAry[i];
-        //如果广告需要关闭
-        if (data.ad.isClosed) {
-            //从数据源移除
-            [_sourceAry removeObjectAtIndex:i];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]  withRowAnimation:UITableViewRowAnimationFade];
-            });
-            break;
-        }
-    }
-}
-```
-```
-//失败
--(void)didFailLoadDynamicAdView{
-    NSLog(@"动态广告下载失败");
-}
-```
-#### Swift
-```
-//广告下载成功
-func didLoadDynamicAdView(_ AdView: DLFeedAdView!, andHeight height: Float) {
-    //根据既定数据结构添加到数据源
-    let data = InfoData.init();
-    data.ad = AdView;
-    data.height = height;
-    
-    //Start->如果需要同时只存在一个动态广告（即展示下一个就回收上一个），就加上此段代码用来回收旧广告
-    var i = _dataAry.count-1;
-    for temp in _dataAry {
-        let tempData : InfoData = _dataAry[i] as! InfoData;
-        if tempData.ad.adType == DLAD_DYNAMIC {
-            _dataAry .removeObject(at: i);
-            if i<_indexRow {
-                _indexRow -= 1;
-            }
-            break;
-        }
-        i -= 1;
-    }
-    //End->如果需要同时只存在一个动态广告（即展示下一个就回收上一个），就加上此段代码用来回收旧广告
-    
-    //成功下载的广告加入数据源
-    _dataAry .insert(data, at: _indexRow+1);
-    //刷新
-    DispatchQueue.main.async {
-        self._tableView.reloadData();
-    }
-}
-```
-```
-//关闭广告
-func closeDynamicFeedView() {
-    var i = 0;
-    for temp in _dataAry {
-        let data = _dataAry[i] as! InfoData;
-        //如果广告需要关闭
-        if data.ad.isClosed {
-            //从数据源移除
-            _dataAry.removeObject(at: i);
-            DispatchQueue.main.async {
-                self._tableView.deleteRows(at: [IndexPath.init(row: i, section: 0)], with: UITableViewRowAnimation(rawValue: 0)!)   
-            }
-            break;
-        }
-        i += 1;
-    }
-}
-```
-
-```
-//广告下载失败
-func didFailLoadDynamicAdView() {
-    NSLog("Fail");
-}
-```
-### ⑤ 在拿到需要展示的广告view和广告位高度后，可以根据您的数据结构自行适配，Demo只提供一个例子
-</br>
-
-## 5.原生信息流模块
-#### 原生信息流模块将会返回一个封装好的数据，在数据源内插入数据并按照原生的样式设置好渲染的Cell，完成代理方法即可。此模块的样例工程为DeepleaperNativeDemo和DeepleaperNativeDemo_Swift，分别对应Objective-C和Swift版本。
-### ① 请求广告:
-#### Objective-C
-
-```
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //记录点击行数
-    _indexRow = indexPath.row ? indexPath.row : 0;
-    DLNativeAdManager* DAM = [DLNativeAdManager getDLNativeAdManager];
-    DAM.placementID = @"YOURPLACEMENTID";
-    DAM.delegate = self;
-    DLdata* data = _sourceAry[indexPath.row];
-    //开始请求广告
-    [DAM loadAdWithUrl:data.url];
-}
-//已经加载了原生广告信息，对图片缓存
--(void)didLoadNativeAd:(DLNativeAdData *)NativeAdData{
-    if (NativeAdData.type  == DLAD_NATIVE_BIGIMAGE) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSURL *imageUrl = NativeAdData.imagesSrcArray[0];
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage* image = [UIImage imageWithData:data];
-                if (data && image) {
-                    //图片下载完成后，缓存图片，并把原生广告数据加入数组
-                    DLdata* data = [[DLdata alloc]init];
-                    data.adData = NativeAdData;
-                    data.imgae = image;
-                    [_sourceAry insertObject:data atIndex:_indexRow+1];
-                    [_tableView reloadData];
-                }
-            });
-        });
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_BIGVIDEO){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSURL *imageUrl = NativeAdData.videoCoverImageSrc;
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage* image = [UIImage imageWithData:data];
-                if (data && image) {
-                    DLdata* data = [[DLdata alloc]init];
-                    data.adData = NativeAdData;
-                    data.imgae = image;
-                    [_sourceAry insertObject:data atIndex:_indexRow+1];
-                    [_tableView reloadData];
-                }
-            });
-        });
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_SINGLEIMAGE){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSURL *imageUrl = NativeAdData.imagesSrcArray[0];
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage* image = [UIImage imageWithData:data];
-                if (data && image) {
-                    DLdata* data = [[DLdata alloc]init];
-                    data.adData = NativeAdData;
-                    data.imgae = image;
-                    [_sourceAry insertObject:data atIndex:_indexRow+1];
-                    [_tableView reloadData];
-                }
-            });
-        });
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_SINGLEVIDEO){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSURL *imageUrl = NativeAdData.videoCoverImageSrc;
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage* image = [UIImage imageWithData:data];
-                if (data && image) {
-                    DLdata* data = [[DLdata alloc]init];
-                    data.adData = NativeAdData;
-                    data.imgae = image;
-                    [_sourceAry insertObject:data atIndex:_indexRow+1];
-                    [_tableView reloadData];
-                }
-            });
-        });
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_SINGLETITLE){
-        DLdata* data = [[DLdata alloc]init];
-        data.adData = NativeAdData;
-        [_sourceAry insertObject:data atIndex:_indexRow+1];
-        [_tableView reloadData];
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_THREEIMAGES){
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_group_t group = dispatch_group_create();
-        __block NSData *firstImageViewData;
-        __block NSData *secondImageViewData;
-        __block NSData *thirdImageViewData;
-        dispatch_group_async(group, queue, ^{
-            NSURL *firstImageViewUrl = NativeAdData.imagesSrcArray[0];
-            firstImageViewData = [NSData dataWithContentsOfURL:firstImageViewUrl];
-        });
-        dispatch_group_async(group, queue, ^{
-            NSURL *secondImageViewUrl = NativeAdData.imagesSrcArray[1];
-            secondImageViewData = [NSData dataWithContentsOfURL:secondImageViewUrl];
-        });
-        dispatch_group_async(group, queue, ^{
-            NSURL *thirdImageViewUrl = NativeAdData.imagesSrcArray[2];
-            thirdImageViewData = [NSData dataWithContentsOfURL:thirdImageViewUrl];
-        });
-        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-            DLdata* data = [[DLdata alloc]init];
-            data.adData = NativeAdData;
-            data.imgae = [UIImage imageWithData:firstImageViewData];
-            data.imgae1 = [UIImage imageWithData:secondImageViewData];
-            data.imgae2 = [UIImage imageWithData:thirdImageViewData];
-            [_sourceAry insertObject:data atIndex:_indexRow+1];
-            [_tableView reloadData];
-        });
-    }
-    else if (NativeAdData.type  == DLAD_NATIVE_SMALLIMAGE){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSURL *imageUrl = NativeAdData.imagesSrcArray[0];
-            NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage* image = [UIImage imageWithData:data];
-                if (data && image) {
-                    DLdata* data = [[DLdata alloc]init];
-                    data.adData = NativeAdData;
-                    data.imgae = image;
-                    [_sourceAry insertObject:data atIndex:_indexRow+1];
-                    [_tableView reloadData];
-                }
-            });
-        });
-    }
-}
-
-```
-#### Swift
-```
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //记录点击行
-        _indexRow = indexPath.row != 0 ? indexPath.row : 0;
-        let data : InfoData = _dataAry[indexPath.row] as! InfoData;
-        //初始化DeepleaperNativeAdManager对象来请求广告
-        let DAM = DeepleaperNativeAdManager.getNativeAdManager();
-        //设置属性
-        DAM?.placementID = "866a5e72-600c-4ba8-ad76-02aa1ec8cb05";
-        DAM?.delegate = self;
-        //根据落地页地址请求广告
-        DAM?.loadAd(withUrl: data.url);
-}
-
-//广告数据返回成功
-    func didLoadNativeAd(_ NativeAdData: DeepleaperNativeAdData!) {
-        //判断类型，根据类型对数据进行缓冲
-        if NativeAdData.type == DLAD_NATIVE_BIGIMAGE{
-            DispatchQueue.global().async {
-                let imageUrl = NativeAdData.imagesSrcArray[0];
-                let data = NSData.init(contentsOf: imageUrl as! URL);
-                DispatchQueue.main.async {
-                    let image = UIImage.init(data: data as! Data);
-                    if data != nil && image != nil {
-                        let data = InfoData();
-                        data.adData = NativeAdData;
-                        data.image = image!;
-                        if self._lastAdRow != 0{
-                            self._dataAry.removeObject(at: self._lastAdRow);
-                        }
-                        self._dataAry .insert(data, at: self._indexRow+1);
-                        self._lastAdRow = self._indexRow+1;
-                        self._tableView.reloadData();
-                    }
-                }
-            }
-        }
-        else if NativeAdData.type == DLAD_NATIVE_BIGVIDEO{
-            DispatchQueue.global().async {
-                let imageUrl = NativeAdData.videoCoverImageSrc;
-                let data = NSData.init(contentsOf: imageUrl!);
-                DispatchQueue.main.async {
-                    let image = UIImage.init(data: data as! Data);
-                    if data != nil && image != nil {
-                        let data = InfoData();
-                        data.adData = NativeAdData;
-                        data.image = image!;
-                        if self._lastAdRow != 0{
-                            self._dataAry.removeObject(at: self._lastAdRow);
-                        }
-                        self._dataAry .insert(data, at: self._indexRow+1);
-                        self._lastAdRow = self._indexRow+1;
-                        self._tableView.reloadData();
-                    }
-                }
-            }
-        }
-        else if NativeAdData.type == DLAD_NATIVE_SINGLEIMAGE{
-            DispatchQueue.global().async {
-                let imageUrl = NativeAdData.imagesSrcArray[0];
-                let data = NSData.init(contentsOf: imageUrl as! URL);
-                DispatchQueue.main.async {
-                    let image = UIImage.init(data: data as! Data);
-                    if data != nil && image != nil {
-                        let data = InfoData();
-                        data.adData = NativeAdData;
-                        data.image = image!;
-                        if self._lastAdRow != 0{
-                            self._dataAry.removeObject(at: self._lastAdRow);
-                        }
-                        self._dataAry .insert(data, at: self._indexRow+1);
-                        self._lastAdRow = self._indexRow+1;
-                        self._tableView.reloadData();
-                    }
-                }
-            }
-        }
-        else if NativeAdData.type == DLAD_NATIVE_SINGLEVIDEO{
-            DispatchQueue.global().async {
-                let imageUrl = NativeAdData.videoCoverImageSrc;
-                let data = NSData.init(contentsOf: imageUrl!);
-                DispatchQueue.main.async {
-                    let image = UIImage.init(data: data as! Data);
-                    if data != nil && image != nil {
-                        let data = InfoData();
-                        data.adData = NativeAdData;
-                        data.image = image!;
-                        if self._lastAdRow != 0{
-                            self._dataAry.removeObject(at: self._lastAdRow);
-                        }
-                        self._dataAry .insert(data, at: self._indexRow+1);
-                        self._lastAdRow = self._indexRow+1;
-                        self._tableView.reloadData();
-                    }
-                }
-            }
-        }
-        else if NativeAdData.type == DLAD_NATIVE_SINGLETITLE{
-            let data = InfoData.init();
-            data.adData = NativeAdData;
-            if self._lastAdRow != 0{
-                self._dataAry.removeObject(at: self._lastAdRow);
-            }
-            self._dataAry .insert(data, at: self._indexRow+1);
-            self._lastAdRow = self._indexRow+1;
-            self._tableView.reloadData();
-        }
-        else if NativeAdData.type == DLAD_NATIVE_THREEIMAGES{
-            let group = DispatchGroup();
-            var  firstImageViewData = NSData();
-            var secondImageViewData = NSData();
-            var thirdImageViewData = NSData();
-
-            //将当前的下载操作添加到组中
-            group.enter()
-                
-            //在这里异步加载任务
-            DispatchQueue.global().async {
-                let url = NativeAdData.imagesSrcArray[0];
-                do {
-                    firstImageViewData = try NSData.init(contentsOf: url as! URL);
-                } catch {
-                    return;
-                }
-            }
-            DispatchQueue.global().async {
-                let url = NativeAdData.imagesSrcArray[1];
-                do {
-                    secondImageViewData = try NSData.init(contentsOf: url as! URL);
-                } catch {
-                    return;
-                }
-            }
-            DispatchQueue.global().async {
-                let url = NativeAdData.imagesSrcArray[2];
-                do {
-                    thirdImageViewData = try NSData.init(contentsOf: url as! URL);
-                } catch {
-                    return;
-                }
-            }
-                
-            //离开当前组
-            group.leave()
-            
-            group.notify(queue: DispatchQueue.main) {
-                //在这里告诉调用者,下完完毕,执行下一步操作
-                DispatchQueue.main.async {
-                    let data = InfoData();
-                    data.adData = NativeAdData;
-                    data.image = UIImage.init(data: firstImageViewData as Data)!;
-                    data.image1 = UIImage.init(data: secondImageViewData as Data)!;
-                    data.image2 = UIImage.init(data: thirdImageViewData as Data)!;
-                    if self._lastAdRow != 0{
-                        self._dataAry.removeObject(at: self._lastAdRow);
-                    }
-                    self._dataAry .insert(data, at: self._indexRow+1);
-                    self._lastAdRow = self._indexRow+1;
-                    self._tableView.reloadData();
-                }
-            }
-        }
-        else if NativeAdData.type == DLAD_NATIVE_SMALLIMAGE{
-            DispatchQueue.global().async {
-                let imageUrl = NativeAdData.imagesSrcArray[0];
-                let data = NSData.init(contentsOf: imageUrl as! URL);
-                DispatchQueue.main.async {
-                    let image = UIImage.init(data: data as! Data);
-                    if data != nil && image != nil {
-                        let data = InfoData();
-                        data.adData = NativeAdData;
-                        data.image = image!;
-                        if self._lastAdRow != 0{
-                            self._dataAry.removeObject(at: self._lastAdRow);
-                        }
-                        self._dataAry .insert(data, at: self._indexRow+1);
-                        self._lastAdRow = self._indexRow+1;
-                        self._tableView.reloadData();
-                    }
-                }
-            }
-        }
-    }
-```
-### ② 添加广告展示:
-#### Objective-C
-```
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cellForRowAtIndexPath");
-    DLdata* data = _sourceAry[indexPath.row];
-    if (data.adData.type == DLAD_NATIVE_BIGIMAGE || data.adData.type == DLAD_NATIVE_BIGVIDEO) {
-            BigMediaCell* cell = [BigMediaCell cellWithTableView:tableView];
-            cell.delegate = self;
-            cell.backgroundColor = [UIColor whiteColor] ;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setCellData:data andIndex:indexPath];
-            return cell;
-        }
-        else if (data.adData.type == DLAD_NATIVE_SMALLIMAGE){
-            SmallMediaCell* cell = [SmallMediaCell cellWithTableView:tableView];
-            cell.delegate = self;
-            cell.backgroundColor = [UIColor whiteColor] ;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setCellData:data andIndex:indexPath];
-            return cell;
-        }
-        else if (data.adData.type == DLAD_NATIVE_SINGLETITLE){
-            SingleTitleCell* cell = [SingleTitleCell cellWithTableView:tableView];
-            cell.delegate = self;
-            cell.backgroundColor = [UIColor whiteColor] ;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setCellData:data andIndex:indexPath];
-            return cell;
-        }
-        else if (data.adData.type == DLAD_NATIVE_SINGLEIMAGE || data.adData.type == DLAD_NATIVE_SINGLEVIDEO){
-            SingleMediaCell* cell = [SingleMediaCell cellWithTableView:tableView];
-            cell.delegate = self;
-            cell.backgroundColor = [UIColor whiteColor] ;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setCellData:data andIndex:indexPath];
-            return cell;
-        }
-        else if (data.adData.type == DLAD_NATIVE_THREEIMAGES){
-            ThreeImagesCell* cell = [ThreeImagesCell cellWithTableView:tableView];
-            cell.delegate = self;
-            cell.backgroundColor = [UIColor whiteColor] ;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell setCellData:data andIndex:indexPath];
-            return cell;
-        }
-        else{
-            static NSString *ID = @"cell";
-            tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: ID];
-            }
-            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-            cell.textLabel.text = [NSString stringWithFormat:@"NO.%ld \n%@",indexPath.row,data.title];
-            [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
-            cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            cell.textLabel.numberOfLines = 0;
-            cell.contentView.backgroundColor = [UIColor lightGrayColor];
-            return cell;
-        }
-}
-```
-#### Swift
-```
-func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-	//根据自己的布局判断广告类型，此处PIC交互模板和Video交互模板使用同样的布局
-            if data.adData.type == DLAD_NATIVE_BIGIMAGE || data.adData.type == DLAD_NATIVE_BIGVIDEO{
-                let cell = BigMediaCell.cellWithTableView(tableView: tableView);
-                cell.delegate = self;
-                cell.setCellData(data: data, indexPath: indexPath as NSIndexPath);
-                return cell;
-            }
-            else if data.adData.type == DLAD_NATIVE_SMALLIMAGE{
-                let cell = SmallMediaCell.cellWithTableView(tableView: tableView);
-                cell.delegate = self;
-                cell.setCellData(data: data, indexPath: indexPath as NSIndexPath);
-                return cell;
-            }
-            else if data.adData.type == DLAD_NATIVE_SINGLETITLE{
-                let cell = SingleTitleCell.cellWithTableView(tableView: tableView);
-                cell.delegate = self;
-                cell.setCellData(data: data, indexPath: indexPath as NSIndexPath);
-                return cell;
-            }
-            //根据自己的布局判断广告类型，此处PIC垂直图片模板和Video垂直视频模板使用同样的布局
-            else if data.adData.type == DLAD_NATIVE_SINGLEIMAGE || data.adData.type == DLAD_NATIVE_SINGLEVIDEO{
-                let cell = SingleMediaCell.cellWithTableView(tableView: tableView);
-                cell.delegate = self;
-                cell.setCellData(data: data, indexPath: indexPath as NSIndexPath);
-                return cell;
-            }
-            else if data.adData.type == DLAD_NATIVE_THREEIMAGES{
-                let cell = ThreeImagesCell.cellWithTableView(tableView: tableView);
-                cell.delegate = self;
-                cell.setCellData(data: data, indexPath: indexPath as NSIndexPath);
-                return cell;
-            }
-
-}
-```
-### ③响应落地页跳转:
-#### Objective-C
-```
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-	//判断落地页是否为广告落地页
-    if (data.adData) {
-        LandPageViewController* LPVC = [[LandPageViewController alloc]init];
-        LPVC.landPageUrl = data.adData.landPageUrl;
-        LPVC.data = data;
-        //判断落地页是否有视频播放
-        if (data.adData.type == DLAD_NATIVE_BIGVIDEO || data.adData.type == DLAD_NATIVE_SINGLEVIDEO) {
-            LPVC.videoHeight = [UIScreen mainScreen].bounds.size.width*data.adData.aspectRatio;
-        }
-        [self.navigationController pushViewController:LPVC animated:YES];
-        [data.adData willEnterLandPage];
-    }
-    else{
-        LandPageViewController* LPVC = [[LandPageViewController alloc]init];
-        LPVC.landPageUrl = [NSURL URLWithString:data.url];
-        [self.navigationController pushViewController:LPVC animated:YES];
-    }
-}
-```
-#### Swift
-```
-func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-	//落地页初始化
-        let dvc = DetailViewController();
-        //判断是广告数据
-        if data.adData.type != DLAD_NATIVE_UNKNOW{
-            dvc.landPageUrl = data.adData.landPageUrl as NSURL;
-            dvc.data = data;
-            //判断是视频类广告数据
-            if data.adData.type == DLAD_NATIVE_BIGVIDEO || data.adData.type == DLAD_NATIVE_SINGLEVIDEO {
-                dvc.videoHeight = UIScreen.main.bounds.size.width * CGFloat.init(data.adData.aspectRatio) ;
-            }
-            //进入广告落地页时调用
-            data.adData.willEnterLandPage();
-        }
-        else{
-            dvc.landPageUrl = NSURL.init(string: data.url)!;
-        }
-        self.present(dvc, animated: true, completion: nil);
-}
-```
-### ④实现代理方法:
-原生信息流模块的代理方法需要媒体开发者写入，详情可以参考我们的样例工程。
-## 6.广告渲染指南
-### 动态信息流广告位
+## 4.信息流广告渲染指南
+#### web
 - 采用UIWebView渲染固定几种[样式](http://www.deepleaper.com/addemo.html)的广告布局，根据返回的高度设置好父View的Frame即可；
 - 如果信息流两边需要留白，可以通过缩小广告位宽度，并把广告居中来达到两边留白，来达到和原生内容相似的效果；
 - 如果信息流上下需要留白，可以通过加大cell高度，并把广告居中来达到上下留白，来达到和原生内容相似的效果。
 
-### 原生信息流广告位
-- 只做数据交互，请根据广告数据类型参照官网[样式](http://www.deepleaper.com/addemo.html)布局，以达到更好的原生体验和广告效果；
-- 参照Demo完成广告主体和附加按钮的点击响应；
-- 在恰当的时机调用展示/点击接口来记录此次行为；
+#### native
+- 采用原生控件渲染，如需要自定义请根据广告数据类型参照官网[样式](http://www.deepleaper.com/addemo.html)布局，以达到更好的原生体验和广告效果；
+- 有两种模式，自动模式默认开启，则会自动按照官网模板添加约束；手动模式请设置autoMode为假，则需要开发者手动设置响应控件的位置，大小以及其他属性
 
-## 7.频次控制
+## 5.信息流广告实例代码
+#### 信息流广告将会返回一个封装好的View和它的高度，在数据源内插入并设置好渲染的Cell，完成代理方法即可。信息流广告包含native类型和web类型。native类型会返回原生的控件，您可以在遵循广告设计守则的前提下自由设置所有控件的位置，大小等；web类型会返回由webView渲染的控件，在此类型下您仅可以设置标题的属性和图文的间隔；
+### 5.1 native
+#### Objective-C
+##### ① 引用,遵循代理:
+```
+@import DeepleaperAd;
+@interface YOURVIEWCONTROLLER ()<DeepleaperFeedAdManagerDelegate>
+```
+##### ② 初始化并请求广告:
+```
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    _fam = [DeepleaperFeedAdManager getFeedAdManager];
+    _fam.delegate = self;
+    _fam.placementID = @"YOURPLACEMENTID";
+    _fam.sandBox = NO;
+    NSString* urlString = @"LANDPAGEURL";
+    [_fam loadAdWithFeedAdType:FEEDAD_NATIVE andUrl:urlString];
+}
+```
+##### ③ 完成回调方法:
+```
+-(void)didLoadNativeAdView:(DeepleaperNativeAdView *)nativeAdView{
+//使用autoMode
+    //加入到数据数组
+    FakeData* data = [[FakeData alloc]init];
+    data.nativeAdView = nativeAdView;
+    [_sourceArray insertObject:data atIndex:_indexRow];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        //刷新
+        [self.tableView reloadData];
+    });
+}
+-(void)didCloseNativeAdView:(DeepleaperNativeAdView *)nativeAdView{
+    for (NSInteger i = _sourceArray.count-1 ; i>=0; i--) {
+        FakeData* data = _sourceArray[i];
+        if (data.nativeAdView.isClosed) {
+            [_sourceArray removeObjectAtIndex:i];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]  withRowAnimation:UITableViewRowAnimationFade];
+            });
+            break;
+        }
+    }
+}
+-(void)didFailLoadNativeAdView:(NSError *)error{
+    NSLog(@"error:%@",error);
+}
+```
+##### ④ 完成渲染:
+```
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *adID = @"adCell";
+   UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:adID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:adID];
+    }
+    for (UIView* view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    [cell.contentView addSubview:data.nativeAdView];
+    return cell;
+}
+```
+#### Swift
+##### ① 引用,遵循代理:
+```
+import DeepleaperAd;
+class YOURVIEWCONTROLLER: DeepleaperFeedAdManagerDelegate
+```
+##### ② 初始化并请求广告:
+```
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	_fam = DeepleaperFeedAdManager.getFeedAdManager();
+	_fam.delegate = self;
+	_fam.placementID = "YOURPLACEMENTID";
+	_fam.sandBox = false;
+	let urlString = "LANDPAGEURL";
+	_fam.loadAd(with: FEEDAD_NATIVE, andUrl: urlString);
+}
+```
+##### ③ 完成回调方法:
+```
+func didLoad(_ nativeAdView: DeepleaperNativeAdView) {
+    let data = FakeData();
+    data.nativeAdView = nativeAdView;
+	_sourceArray.insert(data, at: _indexRow);
+	DispatchQueue.main.async {
+	self.tableView.reloadData();
+	}
+}
+func didClose(_ nativeAdView: DeepleaperNativeAdView) {
+	for i in 0..<_sourceArray.count{
+	let data = _sourceArray[i];
+	if(data.nativeAdView?.isClosed == true){
+	    _sourceArray.remove(at: i);
+	    DispatchQueue.main.async {
+		    self.tableView.deleteRows(at: [IndexPath.init(row: i, section: 0)], with: .fade);
+    };
+	    break;
+        }
+    }
+}
+func didFailLoadNativeAdView(_ error: Error?) {
+    print(error);
+}
+```
+##### ④ 完成渲染:
+```
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	let adID = "adCell";
+	var cell = tableView.dequeueReusableCell(withIdentifier: adID);
+	if(cell == nil){
+		cell = UITableViewCell.init(style: .default, reuseIdentifier: adID);
+	}
+	for view in (cell?.contentView.subviews)! {
+		view.removeFromSuperview();
+	}
+	cell?.contentView.addSubview(data.nativeAdView!);
+	return cell!;
+}
+```
+
+### 5.2 web
+#### Objective-C
+##### ① 引用,遵循代理:
+```
+@import DeepleaperAd;
+@interface YOURVIEWCONTROLLER ()<DeepleaperFeedAdManagerDelegate>
+```
+##### ② 初始化并请求广告:
+```
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    _fam = [DeepleaperFeedAdManager getFeedAdManager];
+    _fam.delegate = self;
+    _fam.placementID = @"YOURPLACEMENTID";
+    _fam.sandBox = NO;
+    NSString* urlString = @"LANDPAGEURL";
+    [_fam loadAdWithFeedAdType:FEEDAD_WEB andUrl:urlString];
+}
+```
+##### ③ 完成回调方法:
+```
+-(void)didLoadWebAdView:(DeepleaperNativeAdView *)webAdView{
+//使用autoMode
+    //加入到数据数组
+    FakeData* data = [[FakeData alloc]init];
+    data.webAdView = webAdView;
+    [_sourceArray insertObject:data atIndex:_indexRow];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        //刷新
+        [self.tableView reloadData];
+    });
+}
+-(void)didCloseWebAdView:(DeepleaperNativeAdView *)webAdView{
+    for (NSInteger i = _sourceArray.count-1 ; i>=0; i--) {
+        FakeData* data = _sourceArray[i];
+        if (data.webAdView.isClosed) {
+            [_sourceArray removeObjectAtIndex:i];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]  withRowAnimation:UITableViewRowAnimationFade];
+            });
+            break;
+        }
+    }
+}
+-(void)didFailLoadWebAdView:(NSError *)error{
+    NSLog(@"error:%@",error);
+}
+```
+##### ④ 完成渲染:
+```
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *adID = @"adCell";
+   UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:adID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:adID];
+    }
+    for (UIView* view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    [cell.contentView addSubview:data.webAdView];
+    return cell;
+}
+```
+#### Swift
+##### ① 引用,遵循代理:
+```
+import DeepleaperAd;
+class YOURVIEWCONTROLLER: DeepleaperFeedAdManagerDelegate
+```
+##### ② 初始化并请求广告:
+```
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	_fam = DeepleaperFeedAdManager.getFeedAdManager();
+	_fam.delegate = self;
+	_fam.placementID = "YOURPLACEMENTID";
+	_fam.sandBox = false;
+	let urlString = "LANDPAGEURL";
+	_fam.loadAd(with: FEEDAD_WEB, andUrl: urlString);
+}
+```
+##### ③ 完成回调方法:
+```
+func didLoad(_ webAdView: DeepleaperWebAdView) {
+    let data = FakeData();
+    data.webAdView = webAdView;
+	_sourceArray.insert(data, at: _indexRow);
+	DispatchQueue.main.async {
+	self.tableView.reloadData();
+	}
+}
+func didClose(_ webAdView: DeepleaperWebAdView) {
+	for i in 0..<_sourceArray.count{
+	let data = _sourceArray[i];
+	if(data. webAdView?.isClosed == true){
+	    _sourceArray.remove(at: i);
+	    DispatchQueue.main.async {
+		    self.tableView.deleteRows(at: [IndexPath.init(row: i, section: 0)], with: .fade);
+    };
+	    break;
+        }
+    }
+}
+func didFailLoadWebAdView(_ error: Error?) {
+    print(error);
+}
+```
+##### ④ 完成渲染:
+```
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	let adID = "adCell";
+	var cell = tableView.dequeueReusableCell(withIdentifier: adID);
+	if(cell == nil){
+		cell = UITableViewCell.init(style: .default, reuseIdentifier: adID);
+	}
+	for view in (cell?.contentView.subviews)! {
+		view.removeFromSuperview();
+	}
+	cell?.contentView.addSubview(data.webAdView!);
+	return cell!;
+}
+```
+
+## 6.频次控制
 ##### 广告中的频次控制是指控制用户在媒体一段时间内最多看到广告的次数，引入频次控制可以提高CTR，增强用户体验。
 
 #### 同时满足以下所有规则才会返回广告：

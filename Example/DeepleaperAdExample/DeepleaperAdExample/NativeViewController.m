@@ -101,7 +101,6 @@
 
 //返回广告成功
 -(void)didLoadNativeAdView:(DeepleaperNativeAdView *)nativeAdView{
-    
 //使用autoMode
     //加入到数据数组
     FakeData* data = [[FakeData alloc]init];
