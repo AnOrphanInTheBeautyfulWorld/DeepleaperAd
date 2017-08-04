@@ -13,7 +13,6 @@ class LandPageViewController: UIViewController,UIWebViewDelegate {
     public var webView : UIWebView!;
     public var url : URL!;
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
